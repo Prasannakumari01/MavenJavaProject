@@ -1,11 +1,6 @@
 pipeline {
     agent any
-
-    tools {
-        maven "MAVEN_HOME"
-        jdk "JAVA_HOME"
-    }
-
+    
     stages {
         stage('Checkout') {
             steps {
@@ -15,17 +10,22 @@ pipeline {
 
         stage('Build') {
             steps {
-                sh 'mvn clean install'
+                echo "Building the project..."
+                bat 'mvn clean install'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                echo "Running tests..."
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                echo "Deploying application..."
             }
         }
     }
-
-    post {
-        success {
-            echo 'Build Successful!'
-        }
-        failure {
-            echo 'Build Failed!'
-        }
-    }
 }
+
